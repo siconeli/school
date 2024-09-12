@@ -1,0 +1,20 @@
+services:
+  application:
+    image: dinosaur-api
+    ports:
+      - 8080:8080
+
+  postgres:
+    image: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD="123"
+      - POSTGRES_DB=postgres
+
+    volumes:
+      - polls_pg_data: /postgres
+
+volumes:
+  polls_pg_data:

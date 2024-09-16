@@ -1,23 +1,20 @@
 package com.school.dinosaur_api.api.controller;
 
 import com.school.dinosaur_api.domain.model.Student;
-import com.school.dinosaur_api.repository.StudentRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @AllArgsConstructor
 @RequestMapping("/students")
 @RestController
 public class StudentController {
 
-    private final StudentRepository studentRepository;
+//    private final StudentRepository studentRepository;
 
     @GetMapping
-    public List<Student> findAllStudents() {
-        return studentRepository.findAll();
+    public String findAllStudents() {
+//        return studentRepository.findAll();
+        return "All students";
     }
 
     @GetMapping("/{studentId}")

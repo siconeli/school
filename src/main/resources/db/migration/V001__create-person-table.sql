@@ -1,12 +1,12 @@
-CREATE TABLE person (
-    id BIGSERIAL NOT NULL,
-    cpf varchar(11) NOT NULL,
-    name VARCHAR(60) NOT NULL,
-    telephone VARCHAR(20) NOT NULL,
-    address VARCHAR(255) NOT NULL,
+create table person (
+    id bigserial not null ,
+    cpf varchar(11) not null ,
+    name varchar(60) not null ,
+    telephone varchar(20) not null ,
+    address varchar(255) not null ,
 
-    PRIMARY KEY (id)
+    primary key (id)
 );
 
-ALTER TABLE person
-ADD CONSTRAINT uk_cpf UNIQUE(cpf);
+alter table person
+add constraint uk_cpf unique (cpf);

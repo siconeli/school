@@ -1,7 +1,10 @@
 package com.school.dinosaur_api.api.controller;
 
+import com.school.dinosaur_api.domain.exception.BusinessException;
 import com.school.dinosaur_api.domain.model.Person;
 import com.school.dinosaur_api.domain.repository.PersonRepository;
+import com.school.dinosaur_api.domain.service.PersonService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +17,7 @@ import java.util.List;
 @RestController
 public class PersonController {
 
+    private final PersonService personService;
     private final PersonRepository personRepository;
 
     @GetMapping
@@ -30,18 +34,18 @@ public class PersonController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Person create(@RequestBody Person newPerson) {
-        return personRepository.save(newPerson);
+    public Person create(@Valid @RequestBody Person newPerson) {
+        return personService.savePerson(newPerson);
     }
 
     @PutMapping("/{personId}")
-    public ResponseEntity<Person> update(@PathVariable Long personId, @RequestBody Person person) {
+    public ResponseEntity<Person> update(@PathVariable Long personId, @Valid @RequestBody Person person) {
         if(!personRepository.existsById(personId)) {
             return ResponseEntity.notFound().build();
         }
 
         person.setId(personId);
-        Person updatePerson = personRepository.save(person);
+        Person updatePerson = personService.savePerson(person);
         return ResponseEntity.ok(updatePerson);
     }
 
@@ -51,7 +55,12 @@ public class PersonController {
             return ResponseEntity.notFound().build();
         }
 
-        personRepository.deleteById(personId);
+        personService.deletePerson(personId);
         return ResponseEntity.noContent().build();
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<String> captureException(BusinessException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 }

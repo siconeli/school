@@ -19,7 +19,7 @@ public class Person {
     @Column
     private String cpf;
 
-    @Column()
+    @Column
     private String name;
 
     @Column

@@ -1,7 +1,6 @@
 package com.school.dinosaur_api.api.controller;
 
 import com.school.dinosaur_api.domain.model.Person;
-import com.school.dinosaur_api.domain.model.Responsible;
 import com.school.dinosaur_api.domain.repository.PersonRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,5 +32,10 @@ public class PersonController {
     @ResponseStatus(HttpStatus.CREATED)
     public Person create(@RequestBody Person newPerson) {
         return personRepository.save(newPerson);
+    }
+
+    @PutMapping("/{personId}")
+    public void update(@RequestBody Person person, @PathVariable Long personId) {
+        return;
     }
 }

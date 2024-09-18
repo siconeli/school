@@ -36,8 +36,22 @@ public class PersonController {
 
     @PutMapping("/{personId}")
     public ResponseEntity<Person> update(@PathVariable Long personId, @RequestBody Person person) {
+        if(!personRepository.existsById(personId)) {
+            return ResponseEntity.notFound().build();
+        }
+
         person.setId(personId);
         Person updatePerson = personRepository.save(person);
         return ResponseEntity.ok(updatePerson);
+    }
+
+    @DeleteMapping("/{personId}")
+    public ResponseEntity<Void> delete(@PathVariable Long personId) {
+        if(!personRepository.existsById(personId)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        personRepository.deleteById(personId);
+        return ResponseEntity.noContent().build();
     }
 }

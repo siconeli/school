@@ -38,12 +38,17 @@ public class Responsible {
     @Column
     private String address;
 
+    @Size(max = 60)
+    @Column
+    private String profession;
+
     @Column
     private Boolean authorized;
 
+    @NotBlank
+    @Size(max = 20)
     @Column
     private Kinship kinship;
 
-//    private Student student;
-
+    private Student student;
 }

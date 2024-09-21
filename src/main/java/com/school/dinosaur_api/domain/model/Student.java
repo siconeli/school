@@ -12,13 +12,12 @@ import lombok.Setter;
 @Setter
 @Entity
 public class Student {
-
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
 
-//    @CPF
+    //    @CPF
     @NotBlank(message = "CPF attribute cannot be empty or null")
     @Size(max = 11)
     @Column
@@ -29,7 +28,6 @@ public class Student {
     @Column
     private String name;
 
-    @NotBlank(message = "age attribute cannot be empty or null")
     @Column
     private Integer age;
 }

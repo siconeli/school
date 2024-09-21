@@ -17,6 +17,9 @@ public class Responsible {
     @Id
     private Long id;
 
+    @ManyToOne
+    private Student student;
+
 //        @CPF
     @NotBlank(message = "CPF attribute cannot be empty or null")
     @Size(max = 11)
@@ -45,10 +48,7 @@ public class Responsible {
     @Column
     private Boolean authorized;
 
-    @NotBlank
-    @Size(max = 20)
+    @Enumerated(EnumType.STRING)
     @Column
     private Kinship kinship;
-
-    private Student student;
 }

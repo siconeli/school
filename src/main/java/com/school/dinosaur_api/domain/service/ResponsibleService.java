@@ -23,6 +23,8 @@ public class ResponsibleService {
             throw new BusinessException("CPF already in use");
         }
 
+        responsible.setAuthorized(true);
+
         return responsibleRepository.save(responsible);
     }
 

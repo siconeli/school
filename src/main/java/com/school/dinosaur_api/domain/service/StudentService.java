@@ -14,10 +14,15 @@ import java.util.List;
 public class StudentService {
     private final StudentRepository studentRepository;
 
+    public Student findStudent(Long studentId) {
+        return studentRepository.findById(studentId)
+                .orElseThrow(() -> new BusinessException("Student not found"));
+    }
+
     @Transactional
     public Student saveStudent(Student student) {
         boolean cpfUsed = studentRepository.findByCpf(student.getCpf())
-                .map(s -> !s.equals(student))
+                .filter(s -> !s.equals(student))
                 .isPresent();
 
         if (cpfUsed) {

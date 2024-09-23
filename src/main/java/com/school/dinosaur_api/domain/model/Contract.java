@@ -11,7 +11,7 @@ public class Contract {
     @Id
     private Long id;
 
-    private Student student;
+//    private Student student;
 
     private Period period;
 

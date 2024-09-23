@@ -6,7 +6,7 @@ create table responsible (
      telephone varchar(20) not null ,
      address varchar(255) not null ,
      profession varchar(60),
-     authorized boolean default true,
+     authorized boolean default true not null,
      kinship varchar(20) not null
 );
 

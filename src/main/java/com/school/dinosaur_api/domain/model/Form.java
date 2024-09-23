@@ -8,7 +8,7 @@ public class Form {
     @Id
     private Long id;
 
-    private Student student;
+//    private Student student;
 
     private Boolean specialCare; //Cuidado especial
 

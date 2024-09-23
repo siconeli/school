@@ -1,6 +1,5 @@
 package com.school.dinosaur_api.api.controller;
 
-import com.school.dinosaur_api.domain.exception.BusinessException;
 import com.school.dinosaur_api.domain.model.Student;
 import com.school.dinosaur_api.domain.repository.StudentRepository;
 import com.school.dinosaur_api.domain.service.StudentService;
@@ -10,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.List;
 
 @AllArgsConstructor

@@ -35,32 +35,20 @@ public class ResponsibleController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Responsible create(@Valid @RequestBody Responsible newResponsible) {
-        return responsibleService.saveResponsible(newResponsible);
+        return responsibleService.createResponsible(newResponsible);
     }
 
     @PutMapping("/{responsibleId}")
     public ResponseEntity<Responsible> update(@PathVariable Long responsibleId, @Valid @RequestBody Responsible responsible) {
-        if(!responsibleRepository.existsById(responsibleId)) {
-            return ResponseEntity.notFound().build();
-        }
-
         responsible.setId(responsibleId);
-        Responsible updateResponsible = responsibleService.saveResponsible(responsible);
-        return ResponseEntity.ok(updateResponsible);
+
+        return ResponseEntity.ok(responsibleService.updateResponsible(responsible));
     }
 
     @DeleteMapping("/{responsibleId}")
     public ResponseEntity<Void> delete(@PathVariable Long responsibleId) {
-        if(!responsibleRepository.existsById(responsibleId)) {
-            return ResponseEntity.notFound().build();
-        }
-
         responsibleService.deleteResponsible(responsibleId);
-        return ResponseEntity.noContent().build();
-    }
 
-    @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<String> captureException(BusinessException e) {
-        return ResponseEntity.badRequest().body(e.getMessage());
+        return ResponseEntity.noContent().build();
     }
 }

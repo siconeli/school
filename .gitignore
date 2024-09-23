@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### Pasta para salvar dados do Postgres criado com docker compose ###
-./Postgres
+/Postgres/

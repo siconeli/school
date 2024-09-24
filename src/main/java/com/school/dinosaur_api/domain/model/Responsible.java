@@ -30,22 +30,22 @@ public class Responsible {
     private Student student;
 
 //        @CPF
-    @NotBlank(message = "CPF attribute cannot be empty or null")
+    @NotBlank
     @Size(max = 11)
     @Column
     private String cpf;
 
-    @NotBlank(message = "name attribute cannot be empty or null")
+    @NotBlank
     @Size(max = 60)
     @Column
     private String name;
 
-    @NotBlank(message = "telephone attribute cannot be empty or null")
+    @NotBlank
     @Size(max = 20)
     @Column
     private String telephone;
 
-    @NotBlank(message = "address attribute cannot be empty or null")
+    @NotBlank
     @Size(max = 255)
     @Column
     private String address;

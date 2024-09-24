@@ -21,12 +21,12 @@ public class Student {
     private Long id;
 
     //    @CPF
-    @NotBlank(message = "CPF attribute cannot be empty or null")
+    @NotBlank
     @Size(max = 11)
     @Column
     private String cpf;
 
-    @NotBlank(message = "name attribute cannot be empty or null")
+    @NotBlank
     @Size(max = 60)
     @Column
     private String name;

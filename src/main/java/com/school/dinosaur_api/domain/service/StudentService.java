@@ -3,8 +3,10 @@ package com.school.dinosaur_api.domain.service;
 import com.school.dinosaur_api.domain.exception.BusinessException;
 import com.school.dinosaur_api.domain.exception.ResourceNotFoundException;
 import com.school.dinosaur_api.domain.model.Student;
+import com.school.dinosaur_api.domain.repository.ResponsibleRepository;
 import com.school.dinosaur_api.domain.repository.StudentRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +16,7 @@ import java.util.List;
 @Service
 public class StudentService {
     private final StudentRepository studentRepository;
+    private final ResponsibleRepository responsibleRepository;
 
     public Student findStudent(Long studentId) {
         return studentRepository.findById(studentId)
@@ -40,7 +43,7 @@ public class StudentService {
     @Transactional
     public Student updateStudent(Student student) {
         if (!studentRepository.existsById(student.getId())) {
-            throw new ResourceNotFoundException("Student not found with id: " + student.getId());
+            throw new ResourceNotFoundException("Student not found with id " + student.getId());
         }
 
         boolean cpfUsed = studentRepository.findByCpf(student.getCpf())
@@ -56,8 +59,12 @@ public class StudentService {
 
     @Transactional
     public void deleteStudent(Long studentId) {
+        if (responsibleRepository.findByStudentId(studentId).isPresent()) {
+            throw new DataIntegrityViolationException("Violated foreign key constraint");
+        }
+
         if (!studentRepository.existsById(studentId)) {
-            throw new ResourceNotFoundException("Student not found with id: " + studentId);
+            throw new ResourceNotFoundException("Student not found with id " + studentId);
         }
 
         studentRepository.deleteById(studentId);

@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.school.dinosaur_api.domain.exception.BusinessException;
 import com.school.dinosaur_api.domain.exception.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.*;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
@@ -26,7 +26,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     private final MessageSource messageSource;
 
-    // SOBRESCREVENDO MÉTODO QUE MANIPULA EXCEPTION DE ARGUMENTO NÃO VÁLIDO - IMPLEMENTANDO PROBLEMDETAIL - RFC 7807
+    // SOBRESCREVENDO MÉTODO QUE MANIPULA EXCEPTION DE ARGUMENTO NÃO VÁLIDO DO JAKARTA BEAN VALIDATION - IMPLEMENTANDO PROBLEMDETAIL - RFC 7807
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         ProblemDetail problemDetail = ProblemDetail.forStatus(status);
@@ -63,12 +63,32 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<String> captureException(BusinessException e) {
-        return ResponseEntity.badRequest().body(e.getMessage());
+    public ProblemDetail handleBusinessException(BusinessException e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        problemDetail.setType(URI.create("https://api.dinosaur/errors/business-error"));
+        problemDetail.setTitle("Business rule error");
+        problemDetail.setDetail(e.getMessage());
+
+        return problemDetail;
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<String> captureNotFoundException(ResourceNotFoundException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    public ProblemDetail handleNotFoundException(ResourceNotFoundException e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
+        problemDetail.setType(URI.create("https://api.dinosaur/errors/resource-not-found"));
+        problemDetail.setTitle("Resource Not Found");
+        problemDetail.setDetail(e.getMessage());
+
+        return problemDetail;
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ProblemDetail handleDataIntegrityViolationException(DataIntegrityViolationException e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.CONFLICT);
+        problemDetail.setType(URI.create("https://api.dinosaur/errors/data-integrity-violation"));
+        problemDetail.setTitle("Data integrity violation");
+        problemDetail.setDetail(e.getMessage());
+
+        return problemDetail;
     }
 }

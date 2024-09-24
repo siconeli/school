@@ -7,6 +7,7 @@ import com.school.dinosaur_api.domain.model.Student;
 import com.school.dinosaur_api.domain.repository.ResponsibleRepository;
 import com.school.dinosaur_api.domain.repository.StudentRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ResponsibleService {
 
     private final ResponsibleRepository responsibleRepository;
-    private final StudentService studentService;
+    private  final StudentService studentService;
 
     @Transactional
     public Responsible createResponsible(Responsible newResponsible) {
@@ -42,7 +43,7 @@ public class ResponsibleService {
     @Transactional
     public Responsible updateResponsible(Responsible responsible) {
         if(!responsibleRepository.existsById(responsible.getId())) {
-            throw new ResourceNotFoundException("Responsible not found with id: " + responsible.getId());
+            throw new ResourceNotFoundException("Responsible not found with id " + responsible.getId());
         }
 
         boolean cpdUsed = responsibleRepository.findByCpf(responsible.getCpf())
@@ -63,7 +64,7 @@ public class ResponsibleService {
     @Transactional
     public void deleteResponsible(Long responsibleId) {
         if(!responsibleRepository.existsById(responsibleId)) {
-            throw new ResourceNotFoundException("Responsible not found with id: " + responsibleId);
+            throw new ResourceNotFoundException("Responsible not found with id " + responsibleId);
         }
 
         responsibleRepository.deleteById(responsibleId);

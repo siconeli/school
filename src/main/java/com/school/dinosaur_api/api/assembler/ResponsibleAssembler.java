@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Component
 public class ResponsibleAssembler {
@@ -14,5 +16,12 @@ public class ResponsibleAssembler {
 
     public ResponsibleRepresentationModel toRepresentationModel(Responsible responsible) {
         return modelMapper.map(responsible, ResponsibleRepresentationModel.class);
+    }
+
+    public List<ResponsibleRepresentationModel> toCollectionRepresentationModel(List<Responsible> responsibleList) {
+        return responsibleList
+                .stream()
+                .map(this::toRepresentationModel)
+                .toList();
     }
 }

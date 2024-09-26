@@ -25,8 +25,8 @@ public class ResponsibleController {
     private final ResponsibleAssembler responsibleAssembler;
 
     @GetMapping
-    public List<Responsible> findAll() {
-        return responsibleRepository.findAll();
+    public List<ResponsibleRepresentationModel> findAll() {
+        return responsibleAssembler.toCollectionRepresentationModel(responsibleRepository.findAll());
     }
 
     @GetMapping("/{responsibleId}")
@@ -39,8 +39,8 @@ public class ResponsibleController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Responsible create(@Valid @RequestBody Responsible newResponsible) {
-        return responsibleService.createResponsible(newResponsible);
+    public ResponsibleRepresentationModel create(@Valid @RequestBody Responsible newResponsible) {
+        return responsibleAssembler.toRepresentationModel(responsibleService.createResponsible(newResponsible));
     }
 
     @PutMapping("/{responsibleId}")

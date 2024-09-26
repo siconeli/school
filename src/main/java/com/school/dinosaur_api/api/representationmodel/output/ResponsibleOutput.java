@@ -1,15 +1,14 @@
-package com.school.dinosaur_api.api.representationmodel;
+package com.school.dinosaur_api.api.representationmodel.output;
 
 import com.school.dinosaur_api.domain.model.Kinship;
-import com.school.dinosaur_api.domain.model.Student;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ResponsibleRepresentationModel {
+public class ResponsibleOutput {
     private Long id;
-    private String studentName;
+    private StudentSummary student;
     private String cpf;
     private String name;
     private String tel;

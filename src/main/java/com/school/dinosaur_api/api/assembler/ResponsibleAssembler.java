@@ -1,6 +1,7 @@
 package com.school.dinosaur_api.api.assembler;
 
-import com.school.dinosaur_api.api.representationmodel.ResponsibleRepresentationModel;
+import com.school.dinosaur_api.api.representationmodel.input.ResponsibleInput;
+import com.school.dinosaur_api.api.representationmodel.output.ResponsibleOutput;
 import com.school.dinosaur_api.domain.model.Responsible;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -14,11 +15,15 @@ public class ResponsibleAssembler {
 
     private ModelMapper modelMapper;
 
-    public ResponsibleRepresentationModel toRepresentationModel(Responsible responsible) {
-        return modelMapper.map(responsible, ResponsibleRepresentationModel.class);
+    public Responsible toEntity (ResponsibleInput responsibleInput) {
+        return modelMapper.map(responsibleInput, Responsible.class);
     }
 
-    public List<ResponsibleRepresentationModel> toCollectionRepresentationModel(List<Responsible> responsibleList) {
+    public ResponsibleOutput toRepresentationModel (Responsible responsible) {
+        return modelMapper.map(responsible, ResponsibleOutput.class);
+    }
+
+    public List<ResponsibleOutput> toCollectionRepresentationModel (List<Responsible> responsibleList) {
         return responsibleList
                 .stream()
                 .map(this::toRepresentationModel)

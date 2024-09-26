@@ -1,11 +1,14 @@
 package com.school.dinosaur_api.api.controller;
 
+import com.school.dinosaur_api.api.assembler.ResponsibleAssembler;
+import com.school.dinosaur_api.api.representationmodel.ResponsibleRepresentationModel;
 import com.school.dinosaur_api.domain.exception.BusinessException;
 import com.school.dinosaur_api.domain.model.Responsible;
 import com.school.dinosaur_api.domain.repository.ResponsibleRepository;
 import com.school.dinosaur_api.domain.service.ResponsibleService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +22,7 @@ public class ResponsibleController {
 
     private final ResponsibleService responsibleService;
     private final ResponsibleRepository responsibleRepository;
+    private final ResponsibleAssembler responsibleAssembler;
 
     @GetMapping
     public List<Responsible> findAll() {
@@ -26,8 +30,9 @@ public class ResponsibleController {
     }
 
     @GetMapping("/{responsibleId}")
-    public ResponseEntity<Responsible> findById(@PathVariable Long responsibleId) {
+    public ResponseEntity<ResponsibleRepresentationModel> findById(@PathVariable Long responsibleId) {
         return responsibleRepository.findById(responsibleId)
+                .map(responsibleAssembler::toRepresentationModel)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }

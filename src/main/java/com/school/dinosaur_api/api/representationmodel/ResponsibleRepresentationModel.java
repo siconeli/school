@@ -1,6 +1,7 @@
 package com.school.dinosaur_api.api.representationmodel;
 
 import com.school.dinosaur_api.domain.model.Kinship;
+import com.school.dinosaur_api.domain.model.Student;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +12,7 @@ public class ResponsibleRepresentationModel {
     private String studentName;
     private String cpf;
     private String name;
-    private String telephone;
+    private String tel;
     private String address;
     private String profession;
     private Boolean authorized;

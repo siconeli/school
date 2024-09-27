@@ -8,12 +8,20 @@ import lombok.Setter;
 @Setter
 public class ResponsibleOutput {
     private Long id;
+
     private StudentSummary student;
+
     private String cpf;
+
     private String name;
+
     private String tel;
+
     private String address;
+
     private String profession;
+
     private Boolean authorized;
+
     private Kinship kinship;
 }

@@ -37,6 +37,7 @@ public class ResponsibleInput {
     @Size(max = 60)
     private String profession;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Kinship kinship;
 }

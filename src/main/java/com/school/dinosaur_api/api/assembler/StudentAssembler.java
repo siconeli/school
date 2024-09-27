@@ -14,15 +14,15 @@ import java.util.List;
 public class StudentAssembler {
     private final ModelMapper modelMapper;
 
-    public Student toEntity (StudentInput studentInput) {
+    public Student toEntity(StudentInput studentInput) {
         return modelMapper.map(studentInput, Student.class);
     }
 
-    public StudentOutput toRepresentationModel (Student student) {
+    public StudentOutput toRepresentationModel(Student student) {
         return modelMapper.map(student, StudentOutput.class);
     }
 
-    public List<StudentOutput> toCollectionRepresentationModel (List<Student> studentList) {
+    public List<StudentOutput> toCollectionRepresentationModel(List<Student> studentList) {
         return studentList
                 .stream()
                 .map(this::toRepresentationModel)

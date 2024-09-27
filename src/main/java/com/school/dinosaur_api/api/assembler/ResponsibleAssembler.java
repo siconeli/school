@@ -15,15 +15,15 @@ public class ResponsibleAssembler {
 
     private ModelMapper modelMapper;
 
-    public Responsible toEntity (ResponsibleInput responsibleInput) {
+    public Responsible toEntity(ResponsibleInput responsibleInput) {
         return modelMapper.map(responsibleInput, Responsible.class);
     }
 
-    public ResponsibleOutput toRepresentationModel (Responsible responsible) {
+    public ResponsibleOutput toRepresentationModel(Responsible responsible) {
         return modelMapper.map(responsible, ResponsibleOutput.class);
     }
 
-    public List<ResponsibleOutput> toCollectionRepresentationModel (List<Responsible> responsibleList) {
+    public List<ResponsibleOutput> toCollectionRepresentationModel(List<Responsible> responsibleList) {
         return responsibleList
                 .stream()
                 .map(this::toRepresentationModel)

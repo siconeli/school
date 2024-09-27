@@ -1,5 +1,6 @@
 package com.school.dinosaur_api.api.assembler;
 
+import com.school.dinosaur_api.api.representationmodel.input.StudentInput;
 import com.school.dinosaur_api.api.representationmodel.output.StudentOutput;
 import com.school.dinosaur_api.domain.model.Student;
 import lombok.AllArgsConstructor;
@@ -13,9 +14,9 @@ import java.util.List;
 public class StudentAssembler {
     private final ModelMapper modelMapper;
 
-//    public Student toEntity (StudentInput studentInput) {
-//        return modelMapper.map(studentInput, Student.class);
-//    }
+    public Student toEntity (StudentInput studentInput) {
+        return modelMapper.map(studentInput, Student.class);
+    }
 
     public StudentOutput toRepresentationModel (Student student) {
         return modelMapper.map(student, StudentOutput.class);

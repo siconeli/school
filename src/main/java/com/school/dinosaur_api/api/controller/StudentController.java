@@ -1,6 +1,7 @@
 package com.school.dinosaur_api.api.controller;
 
 import com.school.dinosaur_api.api.assembler.StudentAssembler;
+import com.school.dinosaur_api.api.representationmodel.input.StudentInput;
 import com.school.dinosaur_api.api.representationmodel.output.StudentOutput;
 import com.school.dinosaur_api.domain.model.Student;
 import com.school.dinosaur_api.domain.repository.StudentRepository;
@@ -36,12 +37,14 @@ public class StudentController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public StudentOutput create(@Valid @RequestBody Student newStudent) {
-        return studentAssembler.toRepresentationModel(studentService.createStudent(newStudent));
+    public StudentOutput create(@Valid @RequestBody StudentInput studentInput) {
+        Student student = studentAssembler.toEntity(studentInput);
+        return studentAssembler.toRepresentationModel(studentService.createStudent(student));
     }
 
     @PutMapping("/{studentId}")
-    public ResponseEntity<StudentOutput> update(@PathVariable Long studentId, @Valid @RequestBody Student student) {
+    public ResponseEntity<StudentOutput> update(@PathVariable Long studentId, @Valid @RequestBody StudentInput studentInput) {
+        Student student = studentAssembler.toEntity(studentInput);
         student.setId(studentId);
 
         return ResponseEntity.ok(studentAssembler.toRepresentationModel(studentService.updateStudent(student)));

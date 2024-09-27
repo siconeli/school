@@ -1,5 +1,7 @@
 package com.school.dinosaur_api.api.controller;
 
+import com.school.dinosaur_api.api.assembler.StudentAssembler;
+import com.school.dinosaur_api.api.representationmodel.output.StudentOutput;
 import com.school.dinosaur_api.domain.model.Student;
 import com.school.dinosaur_api.domain.repository.StudentRepository;
 import com.school.dinosaur_api.domain.service.StudentService;
@@ -17,29 +19,32 @@ import java.util.List;
 public class StudentController {
     private final StudentRepository studentRepository;
     private final StudentService studentService;
+    private final StudentAssembler studentAssembler;
 
     @GetMapping
-    public List<Student> findAll() {
-        return studentRepository.findAll();
+    public List<StudentOutput> findAll() {
+        return studentAssembler.toCollectionRepresentationModel(studentRepository.findAll());
     }
 
     @GetMapping("/{studentId}")
-    public ResponseEntity<Student> findById(@PathVariable Long studentId) {
+    public ResponseEntity<StudentOutput> findById(@PathVariable Long studentId) {
         return studentRepository.findById(studentId)
+                .map(studentAssembler::toRepresentationModel)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Student create(@Valid @RequestBody Student newStudent) {
-        return studentService.createStudent(newStudent);
+    public StudentOutput create(@Valid @RequestBody Student newStudent) {
+        return studentAssembler.toRepresentationModel(studentService.createStudent(newStudent));
     }
 
     @PutMapping("/{studentId}")
-    public ResponseEntity<Student> update(@PathVariable Long studentId, @Valid @RequestBody Student student) {
+    public ResponseEntity<StudentOutput> update(@PathVariable Long studentId, @Valid @RequestBody Student student) {
         student.setId(studentId);
-        return ResponseEntity.ok(studentService.updateStudent(student));
+
+        return ResponseEntity.ok(studentAssembler.toRepresentationModel(studentService.updateStudent(student)));
     }
 
     @DeleteMapping("/{studentId}")

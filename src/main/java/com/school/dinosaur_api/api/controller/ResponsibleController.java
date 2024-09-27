@@ -1,6 +1,8 @@
 package com.school.dinosaur_api.api.controller;
 
-import com.school.dinosaur_api.domain.exception.BusinessException;
+import com.school.dinosaur_api.api.assembler.ResponsibleAssembler;
+import com.school.dinosaur_api.api.representationmodel.input.ResponsibleInput;
+import com.school.dinosaur_api.api.representationmodel.output.ResponsibleOutput;
 import com.school.dinosaur_api.domain.model.Responsible;
 import com.school.dinosaur_api.domain.repository.ResponsibleRepository;
 import com.school.dinosaur_api.domain.service.ResponsibleService;
@@ -18,33 +20,37 @@ import java.util.List;
 @RequestMapping("/responsibles")
 @RestController
 public class ResponsibleController {
-
     private final ResponsibleService responsibleService;
     private final ResponsibleRepository responsibleRepository;
+    private final ResponsibleAssembler responsibleAssembler;
 
     @GetMapping
-    public List<Responsible> findAll() {
-        return responsibleRepository.findAll();
+    public List<ResponsibleOutput> findAll() {
+        return responsibleAssembler.toCollectionRepresentationModel(responsibleRepository.findAll());
     }
 
     @GetMapping("/{responsibleId}")
-    public ResponseEntity<Responsible> findById(@PathVariable Long responsibleId) {
+    public ResponseEntity<ResponsibleOutput> findById(@PathVariable Long responsibleId) {
         return responsibleRepository.findById(responsibleId)
+                .map(responsibleAssembler::toRepresentationModel)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Responsible create(@Valid @RequestBody Responsible newResponsible) {
-        return responsibleService.createResponsible(newResponsible);
+    public ResponsibleOutput create(@Valid @RequestBody ResponsibleInput responsibleInput) {
+        Responsible responsible = responsibleAssembler.toEntity(responsibleInput);
+
+        return responsibleAssembler.toRepresentationModel(responsibleService.createResponsible(responsible));
     }
 
     @PutMapping("/{responsibleId}")
-    public ResponseEntity<Responsible> update(@PathVariable Long responsibleId, @Valid @RequestBody Responsible responsible) {
+    public ResponseEntity<ResponsibleOutput> update(@PathVariable Long responsibleId, @Valid @RequestBody ResponsibleInput responsibleInput) {
+        Responsible responsible = responsibleAssembler.toEntity(responsibleInput);
         responsible.setId(responsibleId);
 
-        return ResponseEntity.ok(responsibleService.updateResponsible(responsible));
+        return ResponseEntity.ok(responsibleAssembler.toRepresentationModel(responsibleService.updateResponsible(responsible)));
     }
 
     @DeleteMapping("/{responsibleId}")

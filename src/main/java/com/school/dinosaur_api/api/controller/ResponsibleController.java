@@ -6,8 +6,10 @@ import com.school.dinosaur_api.domain.repository.ResponsibleRepository;
 import com.school.dinosaur_api.domain.service.ResponsibleService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

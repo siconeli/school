@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface ContractRepository extends JpaRepository<Contract, Long> {
     boolean existsByStudent(Student student);
-//    Optional<Student> existsByStudent(Student student);
+    Optional<Contract> findByStudentId(Long studentId);
 }
 
 

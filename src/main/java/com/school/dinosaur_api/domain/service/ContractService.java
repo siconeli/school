@@ -39,7 +39,11 @@ public class ContractService {
             throw new ResourceNotFoundException("Contract not found with id " + contract.getId());
         }
 
-        if (contractRepository.existsByStudent(contract.getStudent())) {
+        boolean link = contractRepository.findByStudentId(contract.getStudent().getId())
+                .filter(c -> !c.equals(contract))
+                .isPresent();
+
+        if (link) {
             throw new BusinessException("There is already a contract for the student provided");
         }
 

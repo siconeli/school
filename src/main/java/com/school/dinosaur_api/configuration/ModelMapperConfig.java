@@ -6,6 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+// Biblioteca de terceiros, é necessário configurar o Bean para que seja possível fazer a injeção de dependências em outra classe.
 @Configuration
 public class ModelMapperConfig {
 

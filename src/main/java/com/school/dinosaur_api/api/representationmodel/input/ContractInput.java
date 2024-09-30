@@ -1,9 +1,6 @@
 package com.school.dinosaur_api.api.representationmodel.input;
 
 import com.school.dinosaur_api.domain.model.Period;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.OneToOne;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -15,16 +12,15 @@ import java.sql.Date;
 @Setter
 public class ContractInput {
     @Valid
-    @OneToOne
+    @NotNull
     private StudentIdInput student;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
-    private Period period;
+    private Period contractedPeriod;
 
     @NotNull
-    private Date input;
+    private Date dateInput;
 
     @NotNull
-    private Date output;
+    private Date dateOutput;
 }

@@ -1,7 +1,9 @@
 create table contract (
     id bigserial primary key not null,
+    active boolean default true not null,
+    register_date date not null,
     student_id bigint not null,
-    period varchar(20) not null,
+    contracted_period varchar(20) not null,
     date_input date not null,
     date_output date not null
 );

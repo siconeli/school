@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+
 @AllArgsConstructor
 @Service
 public class ResponsibleService {
@@ -33,8 +35,9 @@ public class ResponsibleService {
             throw new BusinessException("CPF already in use");
         }
 
+        newResponsible.setActive(true);
+        newResponsible.setRegisterDate(LocalDate.now());
         newResponsible.setStudent(studentService.findStudent(newResponsible.getStudent().getId()));
-
         newResponsible.setAuthorized(true);
 
         return responsibleRepository.save(newResponsible);

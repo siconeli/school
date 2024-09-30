@@ -5,17 +5,22 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
 public class ContractOutput {
     private Long id;
 
+    private Boolean active;
+
+    private LocalDate registerDate;
+
     private StudentSummary student;
 
-    private Period period;
+    private Period contractedPeriod;
 
-    private Date input;
+    private Date dateInput;
 
-    private Date output;
+    private Date dateOutput;
 }

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
@@ -17,12 +18,17 @@ public class Contract {
     @Id
     private Long id;
 
+    private Boolean active;
+
+    private LocalDate registerDate;
+
     @OneToOne
     private Student student;
 
-    private Period period;
+    @Enumerated(EnumType.STRING)
+    private Period contractedPeriod;
 
-    private Date date_input;
+    private Date dateInput;
 
-    private Date date_output;
+    private Date dateOutput;
 }

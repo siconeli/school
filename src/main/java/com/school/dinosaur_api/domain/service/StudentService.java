@@ -10,6 +10,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -36,6 +38,9 @@ public class StudentService {
         if (cpfUsed) {
             throw new BusinessException("CPF " + student.getCpf() + " already in use");
         }
+
+        student.setActive(true);
+        student.setRegisterDate(LocalDate.now());
 
         return studentRepository.save(student);
     }

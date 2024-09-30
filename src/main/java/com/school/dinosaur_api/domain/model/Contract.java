@@ -22,7 +22,7 @@ public class Contract {
 
     private Period period;
 
-    private Date input;
+    private Date date_input;
 
-    private Date output;
+    private Date date_output;
 }

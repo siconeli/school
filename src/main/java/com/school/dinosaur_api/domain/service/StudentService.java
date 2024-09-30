@@ -22,7 +22,7 @@ public class StudentService {
 
     public Student findStudent(Long studentId) {
         return studentRepository.findById(studentId)
-                .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + studentId));
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with id " + studentId));
     }
 
     @Transactional

@@ -47,4 +47,14 @@ public class ContractController {
 
         return contractAssembler.toRepresentationModel(contractService.createContract(contract));
     }
+
+    @PutMapping("/{contractId}")
+    public ResponseEntity<ContractOutput> update(@PathVariable Long contractId, @RequestBody ContractInput contractInput) {
+        Contract contract = contractAssembler.toEntity(contractInput);
+
+        contract.setId(contractId);
+
+        return ResponseEntity.ok(contractAssembler.toRepresentationModel(contractService.updateContract(contract)));
+
+    }
 }

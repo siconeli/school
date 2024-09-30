@@ -5,7 +5,13 @@ import com.school.dinosaur_api.domain.model.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface ContractRepository extends JpaRepository<Contract, Long> {
-    boolean existsByStudent(Student student); // Query method
+    boolean existsByStudent(Student student);
+//    Optional<Student> existsByStudent(Student student);
 }
+
+
+

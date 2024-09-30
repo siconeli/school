@@ -1,6 +1,8 @@
 package com.school.dinosaur_api.domain.service;
 
+import com.school.dinosaur_api.api.representationmodel.output.ContractOutput;
 import com.school.dinosaur_api.domain.exception.BusinessException;
+import com.school.dinosaur_api.domain.exception.ResourceNotFoundException;
 import com.school.dinosaur_api.domain.model.Contract;
 import com.school.dinosaur_api.domain.repository.ContractRepository;
 import jakarta.transaction.Transactional;
@@ -32,4 +34,20 @@ public class ContractService {
         return contractRepository.save(newContract);
     }
 
+    public Contract updateContract(Contract contract) {
+        if (!contractRepository.existsById(contract.getId())) {
+            throw new ResourceNotFoundException("Contract not found with id " + contract.getId());
+        }
+
+        if (contractRepository.existsByStudent(contract.getStudent())) {
+            throw new BusinessException("There is already a contract for the student provided");
+        }
+
+        studentService.findStudent(contract.getStudent().getId());
+
+        contract.setActive(true);
+        contract.setRegisterDate(LocalDate.now());
+
+        return contractRepository.save(contract);
+    }
 }

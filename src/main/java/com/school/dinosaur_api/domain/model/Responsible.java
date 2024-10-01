@@ -37,5 +37,6 @@ public class Responsible {
 
     private Boolean authorized;
 
+    @Enumerated(EnumType.STRING)
     private Kinship kinship;
 }

@@ -57,4 +57,11 @@ public class ContractController {
         return ResponseEntity.ok(contractAssembler.toRepresentationModel(contractService.updateContract(contract)));
 
     }
+
+    @DeleteMapping("/{contractId}")
+    public ResponseEntity<Void> delete(@PathVariable Long contractId) {
+        contractService.deleteContract(contractId);
+
+        return ResponseEntity.noContent().build();
+    }
 }

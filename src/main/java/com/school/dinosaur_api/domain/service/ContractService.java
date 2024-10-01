@@ -34,6 +34,7 @@ public class ContractService {
         return contractRepository.save(newContract);
     }
 
+    @Transactional
     public Contract updateContract(Contract contract) {
         if (!contractRepository.existsById(contract.getId())) {
             throw new ResourceNotFoundException("Contract not found with id " + contract.getId());
@@ -53,5 +54,14 @@ public class ContractService {
         contract.setRegisterDate(LocalDate.now());
 
         return contractRepository.save(contract);
+    }
+
+    @Transactional
+    public void deleteContract(Long contractId) {
+        if (!contractRepository.existsById(contractId)) {
+            throw new ResourceNotFoundException("Contract not found with id " + contractId);
+        }
+
+        contractRepository.deleteById(contractId);
     }
 }

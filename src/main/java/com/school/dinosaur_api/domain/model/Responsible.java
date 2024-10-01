@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
@@ -22,9 +21,6 @@ public class Responsible {
 
     private LocalDate registerDate;
 
-    @ManyToOne
-    private Student student;
-
     private String cpf;
 
     private String name;
@@ -39,4 +35,7 @@ public class Responsible {
 
     @Enumerated(EnumType.STRING)
     private Kinship kinship;
+
+    @ManyToOne
+    private Student student;
 }

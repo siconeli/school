@@ -19,8 +19,6 @@ import java.util.List;
 @Service
 public class StudentService {
     private final StudentRepository studentRepository;
-    private final ResponsibleRepository responsibleRepository;
-    private final ContractRepository contractRepository;
 
     public Student findStudent(Long studentId) {
         return studentRepository.findById(studentId)
@@ -66,14 +64,6 @@ public class StudentService {
 
     @Transactional
     public void deleteStudent(Long studentId) {
-        if (responsibleRepository.findByStudentId(studentId).isPresent()) {
-            throw new DataIntegrityViolationException("Violated foreign key constraint");
-        }
-
-        if (contractRepository.findByStudentId(studentId).isPresent()) {
-            throw new DataIntegrityViolationException("Violated foreign key constraint");
-        }
-
         if (!studentRepository.existsById(studentId)) {
             throw new ResourceNotFoundException("Student not found with id " + studentId);
         }

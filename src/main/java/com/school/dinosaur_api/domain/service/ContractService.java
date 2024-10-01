@@ -55,13 +55,4 @@ public class ContractService {
 
         return contractRepository.save(contract);
     }
-
-    @Transactional
-    public void deleteContract(Long contractId) {
-        if (!contractRepository.existsById(contractId)) {
-            throw new ResourceNotFoundException("Contract not found with id " + contractId);
-        }
-
-        contractRepository.deleteById(contractId);
-    }
 }

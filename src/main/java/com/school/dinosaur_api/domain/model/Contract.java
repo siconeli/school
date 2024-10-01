@@ -1,10 +1,12 @@
 package com.school.dinosaur_api.domain.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 
@@ -22,8 +24,8 @@ public class Contract {
 
     private LocalDate registerDate;
 
-    @OneToOne
-    private Student student;
+
+    private BigDecimal value;
 
     @Enumerated(EnumType.STRING)
     private Period contractedPeriod;
@@ -31,4 +33,7 @@ public class Contract {
     private Date dateInput;
 
     private Date dateOutput;
+
+    @OneToOne
+    private Student student;
 }

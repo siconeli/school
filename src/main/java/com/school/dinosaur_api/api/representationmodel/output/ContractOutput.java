@@ -4,6 +4,7 @@ import com.school.dinosaur_api.domain.model.Period;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 
@@ -17,6 +18,8 @@ public class ContractOutput {
     private LocalDate registerDate;
 
     private StudentSummary student;
+
+    private BigDecimal value;
 
     private Period contractedPeriod;
 

@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
@@ -26,4 +28,19 @@ public class Student {
     private String name;
 
     private Integer age;
+
+    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Contract contract;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Responsible> responsibles = new ArrayList<>();
+
+//    public Responsible addResponsible(Responsible responsible) {
+//        responsible.setActive(true);
+//        responsible.setRegisterDate(LocalDate.now());
+//        responsible.setStudent(this);
+//        getResponsibles().add(responsible);
+//
+//        return responsible;
+//    }
 }

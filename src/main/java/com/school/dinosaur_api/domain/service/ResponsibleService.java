@@ -45,6 +45,10 @@ public class ResponsibleService {
         }
 
         // VERIFICAR SE O studentId PASSADO TEM RELAÇÃO COM O RESPONSIBLE
+        // se for diferente, lançar uma exception informando que o id da uri não é o mesmo id do cadastro no banco de dados.
+//         if (!responsibleDb.getStudent().getId().equals(studentId)) {
+//             throw new BusinessException("id de student diferente do banco!");
+//         }
 
 
         responsible.setStudent(studentService.findStudent(studentId));

@@ -1,6 +1,8 @@
 package com.school.dinosaur_api.domain.model;
 
+import com.school.dinosaur_api.api.assembler.ResponsibleAssembler;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,12 +37,13 @@ public class Student {
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Responsible> responsibles = new ArrayList<>();
 
-//    public Responsible addResponsible(Responsible responsible) {
-//        responsible.setActive(true);
-//        responsible.setRegisterDate(LocalDate.now());
-//        responsible.setStudent(this);
-//        getResponsibles().add(responsible);
-//
-//        return responsible;
-//    }
+    public Responsible addResponsible(Responsible responsible) {
+        responsible.setActive(true);
+        responsible.setRegisterDate(LocalDate.now());
+        responsible.setAuthorized(true);
+        responsible.setStudent(this);
+        getResponsibles().add(responsible); // Ao adicionar o responsible já realiza o save, devido o Cascade.
+
+        return responsible;
+    }
 }

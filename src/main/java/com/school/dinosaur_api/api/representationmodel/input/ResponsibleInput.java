@@ -1,9 +1,6 @@
 package com.school.dinosaur_api.api.representationmodel.input;
 
 import com.school.dinosaur_api.domain.model.Kinship;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -14,10 +11,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ResponsibleInput {
-    @Valid
-    @NotNull
-    private StudentIdInput student;
-
     @NotBlank
     @Size(max = 11)
     private String cpf;

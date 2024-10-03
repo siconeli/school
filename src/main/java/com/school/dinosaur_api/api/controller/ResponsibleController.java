@@ -5,15 +5,14 @@ import com.school.dinosaur_api.api.representationmodel.input.ResponsibleInput;
 import com.school.dinosaur_api.api.representationmodel.output.ResponsibleOutput;
 import com.school.dinosaur_api.domain.model.Responsible;
 import com.school.dinosaur_api.domain.model.Student;
-import com.school.dinosaur_api.domain.repository.ResponsibleRepository;
 import com.school.dinosaur_api.domain.service.ResponsibleService;
 import com.school.dinosaur_api.domain.service.StudentService;
+import com.school.dinosaur_api.domain.validation.ValidationGroups;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +22,6 @@ import java.util.List;
 @RestController
 public class ResponsibleController {
     private final ResponsibleService responsibleService;
-    private final ResponsibleRepository responsibleRepository;
     private final ResponsibleAssembler responsibleAssembler;
     private final StudentService studentService;
 
@@ -42,11 +40,11 @@ public class ResponsibleController {
         return responsibleAssembler.toRepresentationModel(responsibleService.createResponsible(studentId, responsible));
     }
 
-    @PutMapping("/{responsibleId}")
-    public ResponseEntity<ResponsibleOutput> update(@PathVariable Long studentId, @PathVariable Long responsibleId, @Valid @RequestBody ResponsibleInput responsibleInput) {
-        Responsible responsible = responsibleAssembler.toEntity(responsibleInput);
-        responsible.setId(responsibleId);
-        return ResponseEntity.ok(responsibleAssembler.toRepresentationModel(responsibleService.updateResponsible(studentId, responsible)));
+    @PatchMapping("/{responsibleId}")
+    public ResponseEntity<ResponsibleOutput> update(@PathVariable Long studentId, @PathVariable Long responsibleId, @Validated(ValidationGroups.UpdateValidation.class) @RequestBody ResponsibleInput responsibleInput) {
+        Responsible responsibleDto = responsibleAssembler.toEntity(responsibleInput);
+        responsibleDto.setId(responsibleId);
+        return ResponseEntity.ok(responsibleAssembler.toRepresentationModel(responsibleService.udaptePartialResponsible(studentId, responsibleDto)));
     }
 
     @DeleteMapping("/{responsibleId}")

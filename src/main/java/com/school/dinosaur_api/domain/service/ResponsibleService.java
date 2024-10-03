@@ -31,31 +31,6 @@ public class ResponsibleService {
         return student.addResponsible(newResponsible);
     }
 
-//    @Transactional
-//    public Responsible updateResponsible(Long studentId, Responsible responsible) {
-//        Responsible responsibleDb = responsibleRepository.findById(responsible.getId())
-//                .orElseThrow(() -> new ResourceNotFoundException("Responsible not found with id " + responsible.getId()));
-
-//        boolean cpdUsed = responsibleRepository.findByCpf(responsible.getCpf())
-//                .filter(r -> !r.equals(responsible))
-//                .isPresent();
-//
-//        if (cpdUsed) {
-//            throw new BusinessException("CPF already in use");
-//        }
-
-//         if (!responsibleDb.getStudent().getId().equals(studentId)) {
-//             throw new BusinessException("The student has no relationship with the person responsible according to the IDs provided in the URI.");
-//         }
-//
-//        responsible.setStudent(studentService.findStudent(studentId));
-//        responsible.setRegisterDate(responsibleDb.getRegisterDate());
-//        responsible.setAuthorized(responsibleDb.getAuthorized());
-//        responsible.setActive(true);
-//
-//        return responsibleRepository.save(responsible);
-//    }
-
     @Transactional
     public Responsible udaptePartialResponsible(Long studentId, Responsible responsibleDto) {
         Responsible responsible = responsibleRepository.findById(responsibleDto.getId())
@@ -72,6 +47,8 @@ public class ResponsibleService {
         if (!responsible.getStudent().getId().equals(studentId)) {
             throw new BusinessException("The student has no relationship with the person responsible according to the IDs provided in the URI.");
         }
+
+//        VER COMO USAR O beanUtilsBean.copyProperties
 
         if (responsibleDto.getCpf() != null) responsible.setCpf(responsibleDto.getCpf());
         if (responsibleDto.getName() != null) responsible.setName(responsibleDto.getName());

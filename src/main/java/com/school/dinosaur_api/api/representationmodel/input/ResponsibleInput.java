@@ -14,22 +14,22 @@ import lombok.Setter;
 @Setter
 public class ResponsibleInput {
     @NotBlank
-    @Size(max = 11, groups = {Default.class, ValidationGroups.UpdateValidation.class})
+    @Size(min = 11, max = 11, groups = {Default.class, ValidationGroups.UpdateValidation.class})
     private String cpf;
 
     @NotBlank
-    @Size(max = 60, groups = {Default.class, ValidationGroups.UpdateValidation.class})
+    @Size(min = 1, max = 60, groups = {Default.class, ValidationGroups.UpdateValidation.class})
     private String name;
 
     @NotBlank
-    @Size(max = 20, groups = {Default.class, ValidationGroups.UpdateValidation.class})
+    @Size(min = 1, max = 20, groups = {Default.class, ValidationGroups.UpdateValidation.class})
     private String telephone;
 
     @NotBlank
-    @Size(max = 255, groups = {Default.class, ValidationGroups.UpdateValidation.class})
+    @Size(min = 1, max = 255, groups = {Default.class, ValidationGroups.UpdateValidation.class})
     private String address;
 
-    @Size(max = 60, groups = {Default.class, ValidationGroups.UpdateValidation.class})
+    @Size(min = 1, max = 60, groups = {Default.class, ValidationGroups.UpdateValidation.class})
     private String profession;
 
     @NotNull

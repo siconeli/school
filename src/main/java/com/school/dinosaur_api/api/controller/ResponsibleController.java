@@ -35,9 +35,9 @@ public class ResponsibleController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponsibleOutput create(@PathVariable Long studentId, @Valid @RequestBody ResponsibleInput responsibleInput) {
-        Responsible responsible = responsibleAssembler.toEntity(responsibleInput);
+        Responsible responsibleDto = responsibleAssembler.toEntity(responsibleInput);
 
-        return responsibleAssembler.toRepresentationModel(responsibleService.createResponsible(studentId, responsible));
+        return responsibleAssembler.toRepresentationModel(responsibleService.createResponsible(studentId, responsibleDto));
     }
 
     @PatchMapping("/{responsibleId}")

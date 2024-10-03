@@ -1,6 +1,6 @@
 package com.school.dinosaur_api.domain.service;
 
-import com.school.dinosaur_api.api.assembler.ResponsibleAssembler;
+import com.school.dinosaur_api.api.helper.IgnoreNullBeanUtilsBean;
 import com.school.dinosaur_api.domain.exception.BusinessException;
 import com.school.dinosaur_api.domain.exception.ResourceNotFoundException;
 import com.school.dinosaur_api.domain.model.Responsible;
@@ -10,12 +10,15 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.InvocationTargetException;
+
 @AllArgsConstructor
 @Service
 public class ResponsibleService {
 
     private final ResponsibleRepository responsibleRepository;
     private  final StudentService studentService;
+    private final IgnoreNullBeanUtilsBean ignoreNullBeanUtilsBean;
 
     @Transactional
     public Responsible createResponsible(Long studentId, Responsible newResponsible) {
@@ -48,14 +51,15 @@ public class ResponsibleService {
             throw new BusinessException("The student has no relationship with the person responsible according to the IDs provided in the URI.");
         }
 
-//        VER COMO USAR O beanUtilsBean.copyProperties
-
-        if (responsibleDto.getCpf() != null) responsible.setCpf(responsibleDto.getCpf());
-        if (responsibleDto.getName() != null) responsible.setName(responsibleDto.getName());
-        if (responsibleDto.getTelephone() != null) responsible.setTelephone(responsibleDto.getTelephone());
-        if (responsibleDto.getAddress() != null) responsible.setAddress(responsibleDto.getAddress());
-        if (responsibleDto.getProfession() != null) responsible.setProfession(responsibleDto.getProfession());
-        if (responsibleDto.getKinship() != null) responsible.setKinship(responsibleDto.getKinship());
+        try {
+            ignoreNullBeanUtilsBean.copyProperties(responsible, responsibleDto); // Copia os atributos do responsibleDto no responsible, somente os não nulos.
+        }
+        catch(IllegalAccessException e) {
+            throw new BusinessException("Message: " + e.getMessage());
+        }
+        catch(InvocationTargetException e) {
+            throw new BusinessException(e.getMessage());
+        }
 
         return responsibleRepository.save(responsible);
     }

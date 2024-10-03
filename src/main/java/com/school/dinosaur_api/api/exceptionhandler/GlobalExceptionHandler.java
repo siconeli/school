@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Locale;
 import java.util.Map;
@@ -62,6 +63,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, problemDetail, headers, status, request);
     }
 
+
+
+
     @ExceptionHandler(BusinessException.class)
     public ProblemDetail handleBusinessException(BusinessException e) {
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
@@ -87,6 +91,26 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.CONFLICT);
         problemDetail.setType(URI.create("https://api.dinosaur/errors/data-integrity-violation"));
         problemDetail.setTitle("Data integrity violation");
+        problemDetail.setDetail(e.getMessage());
+
+        return problemDetail;
+    }
+
+    @ExceptionHandler(IllegalAccessException.class)
+    public ProblemDetail handleIllegalAccessException(IllegalAccessException e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.CONFLICT);
+        problemDetail.setType(URI.create("https://api.dinosaur/errors/ben-Utils-Bean"));
+        problemDetail.setTitle("Error trying to copy properties");
+        problemDetail.setDetail(e.getMessage());
+
+        return problemDetail;
+    }
+
+    @ExceptionHandler(InvocationTargetException.class)
+    public ProblemDetail handleInvocationTargetException(InvocationTargetException e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.CONFLICT);
+        problemDetail.setType(URI.create("https://api.dinosaur/errors/ben-Utils-Bean"));
+        problemDetail.setTitle("Error trying to copy properties");
         problemDetail.setDetail(e.getMessage());
 
         return problemDetail;

@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 @AllArgsConstructor
@@ -42,7 +41,7 @@ public class ResponsibleController {
     }
 
     @PatchMapping("/{responsibleId}")
-    public ResponseEntity<ResponsibleOutput> update(@PathVariable Long studentId, @PathVariable Long responsibleId, @Validated(ValidationGroups.UpdateValidation.class) @RequestBody ResponsibleInput responsibleInput) throws InvocationTargetException, IllegalAccessException {
+    public ResponseEntity<ResponsibleOutput> update(@PathVariable Long studentId, @PathVariable Long responsibleId, @Validated(ValidationGroups.UpdateValidation.class) @RequestBody ResponsibleInput responsibleInput) {
         Responsible responsibleDto = responsibleAssembler.toEntity(responsibleInput);
         responsibleDto.setId(responsibleId);
 
@@ -50,8 +49,8 @@ public class ResponsibleController {
     }
 
     @DeleteMapping("/{responsibleId}")
-    public ResponseEntity<Void> delete(@PathVariable Long responsibleId) {
-        responsibleService.deleteResponsible(responsibleId);
+    public ResponseEntity<Void> delete(@PathVariable Long studentId, @PathVariable Long responsibleId) {
+        responsibleService.deleteResponsible(studentId, responsibleId);
 
         return ResponseEntity.noContent().build();
     }

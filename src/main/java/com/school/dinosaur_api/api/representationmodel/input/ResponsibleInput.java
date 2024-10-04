@@ -35,3 +35,5 @@ public class ResponsibleInput {
     @NotNull
     private Kinship kinship;
 }
+
+

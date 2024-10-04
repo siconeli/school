@@ -46,4 +46,8 @@ public class Student {
 
         return responsible;
     }
+
+    public void removeResponsible(Responsible responsible) {
+        getResponsibles().remove(responsible);
+    }
 }

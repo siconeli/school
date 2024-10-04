@@ -20,6 +20,11 @@ public class ResponsibleService {
     private  final StudentService studentService;
     private final IgnoreNullBeanUtilsBean ignoreNullBeanUtilsBean;
 
+    public Responsible findResponsible(Long responsibleId) {
+        return responsibleRepository.findById(responsibleId)
+                .orElseThrow(() -> new BusinessException("Responsible not found with id " + responsibleId));
+    }
+
     @Transactional
     public Responsible createResponsible(Long studentId, Responsible newResponsible) {
         boolean cpfUsed = responsibleRepository.findByCpf(newResponsible.getCpf())
@@ -36,8 +41,7 @@ public class ResponsibleService {
 
     @Transactional
     public Responsible udaptePartialResponsible(Long studentId, Responsible responsibleDto) {
-        Responsible responsible = responsibleRepository.findById(responsibleDto.getId())
-                .orElseThrow(() -> new BusinessException("Responsible not found with id " + responsibleDto.getId()));
+        Responsible responsible = this.findResponsible(responsibleDto.getId());
 
         boolean cpdUsed = responsibleRepository.findByCpf(responsibleDto.getCpf())
                 .filter(r -> !r.equals(responsibleDto))
@@ -65,11 +69,14 @@ public class ResponsibleService {
     }
 
     @Transactional
-    public void deleteResponsible(Long responsibleId) {
-        if(!responsibleRepository.existsById(responsibleId)) {
-            throw new ResourceNotFoundException("Responsible not found with id " + responsibleId);
+    public void deleteResponsible(Long studentId, Long responsibleId) {
+        Responsible responsible = this.findResponsible(responsibleId);
+
+        if (!responsible.getStudent().getId().equals(studentId)) {
+            throw new BusinessException("The student has no relationship with the person responsible according to the IDs provided in the URI.");
         }
 
-        responsibleRepository.deleteById(responsibleId);
+        Student student = studentService.findStudent(studentId);
+        student.removeResponsible(responsible);
     }
 }

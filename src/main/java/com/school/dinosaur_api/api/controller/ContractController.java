@@ -27,10 +27,10 @@ public class ContractController {
     private final ContractAssembler contractAssembler;
     private final ContractService contractService;
 
-    @GetMapping
-    public List<ContractOutput> findAll() {
-        return contractAssembler.toCollectionRepresentationModel(contractRepository.findAll());
-    }
+//    @GetMapping
+//    public List<ContractOutput> findAll() {
+//        return contractAssembler.toCollectionRepresentationModel(contractRepository.findAll());
+//    }
 
     @GetMapping("/{contractId}")
     public ResponseEntity<ContractOutput> findById(@PathVariable Long contractId) {

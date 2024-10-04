@@ -22,7 +22,7 @@ public class ResponsibleService {
 
     public Responsible findResponsible(Long responsibleId) {
         return responsibleRepository.findById(responsibleId)
-                .orElseThrow(() -> new BusinessException("Responsible not found with id " + responsibleId));
+                .orElseThrow(() -> new ResourceNotFoundException("Responsible not found with id " + responsibleId));
     }
 
     @Transactional

@@ -26,10 +26,15 @@ public class ResponsibleController {
     private final StudentService studentService;
 
     @GetMapping
-    public List<ResponsibleOutput> findAll(@PathVariable Long studentId) {
+    public List<ResponsibleOutput> findAllAuthorized(@PathVariable Long studentId) {
         Student student = studentService.findStudent(studentId);
 
-        return responsibleAssembler.toCollectionRepresentationModel(student.getResponsibles());
+        List<Responsible> responsibleAuthorized = student.getResponsibles()
+                .stream()
+                .filter(Responsible::getAuthorized)
+                .toList();
+
+        return responsibleAssembler.toCollectionRepresentationModel(responsibleAuthorized);
     }
 
     @PostMapping

@@ -95,24 +95,4 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         return problemDetail;
     }
-
-    @ExceptionHandler(IllegalAccessException.class)
-    public ProblemDetail handleIllegalAccessException(IllegalAccessException e) {
-        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.CONFLICT);
-        problemDetail.setType(URI.create("https://api.dinosaur/errors/ben-Utils-Bean"));
-        problemDetail.setTitle("Error trying to copy properties");
-        problemDetail.setDetail(e.getMessage());
-
-        return problemDetail;
-    }
-
-    @ExceptionHandler(InvocationTargetException.class)
-    public ProblemDetail handleInvocationTargetException(InvocationTargetException e) {
-        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.CONFLICT);
-        problemDetail.setType(URI.create("https://api.dinosaur/errors/ben-Utils-Bean"));
-        problemDetail.setTitle("Error trying to copy properties");
-        problemDetail.setDetail(e.getMessage());
-
-        return problemDetail;
-    }
 }

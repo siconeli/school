@@ -1,5 +1,6 @@
 package com.school.dinosaur_api.domain.model;
 
+import com.school.dinosaur_api.domain.exception.BusinessException;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -38,4 +39,20 @@ public class Responsible {
 
     @ManyToOne
     private Student student;
+
+    public void authorizeResponsible() {
+        if (getAuthorized()) {
+            throw new BusinessException("The responsible is already authorized");
+        }
+
+        setAuthorized(true);
+    }
+
+    public void disauthorizeResponsible() {
+        if (!getAuthorized()) {
+            throw new BusinessException("The responsible is not authorized");
+        }
+
+        setAuthorized(false);
+    }
 }

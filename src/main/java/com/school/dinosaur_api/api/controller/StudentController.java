@@ -6,10 +6,12 @@ import com.school.dinosaur_api.api.representationmodel.output.StudentOutput;
 import com.school.dinosaur_api.domain.model.Student;
 import com.school.dinosaur_api.domain.repository.StudentRepository;
 import com.school.dinosaur_api.domain.service.StudentService;
+import com.school.dinosaur_api.domain.validation.ValidationGroups;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,16 +40,16 @@ public class StudentController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public StudentOutput create(@Valid @RequestBody StudentInput studentInput) {
-        Student student = studentAssembler.toEntity(studentInput);
-        return studentAssembler.toRepresentationModel(studentService.createStudent(student));
+        Student studentDto = studentAssembler.toEntity(studentInput);
+        return studentAssembler.toRepresentationModel(studentService.createStudent(studentDto));
     }
 
-    @PutMapping("/{studentId}")
-    public ResponseEntity<StudentOutput> update(@PathVariable Long studentId, @Valid @RequestBody StudentInput studentInput) {
-        Student student = studentAssembler.toEntity(studentInput);
-        student.setId(studentId);
+    @PatchMapping("/{studentId}")
+    public ResponseEntity<StudentOutput> update(@PathVariable Long studentId, @Validated(ValidationGroups.UpdateValidation.class) @RequestBody StudentInput studentInput) {
+        Student studentDto = studentAssembler.toEntity(studentInput);
+        studentDto.setId(studentId);
 
-        return ResponseEntity.ok(studentAssembler.toRepresentationModel(studentService.updateStudent(student)));
+        return ResponseEntity.ok(studentAssembler.toRepresentationModel(studentService.updatePartialStudent(studentDto)));
     }
 
     @DeleteMapping("/{studentId}")

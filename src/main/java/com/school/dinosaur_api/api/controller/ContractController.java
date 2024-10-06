@@ -6,12 +6,15 @@ import com.school.dinosaur_api.api.representationmodel.output.ContractOutput;
 import com.school.dinosaur_api.domain.model.Contract;
 import com.school.dinosaur_api.domain.repository.ContractRepository;
 import com.school.dinosaur_api.domain.service.ContractService;
+import com.school.dinosaur_api.domain.validation.ValidationGroups;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,21 +23,16 @@ import java.util.List;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
 @Setter
-@RequestMapping("/contracts")
+@RequestMapping("/students/{studentId}/contracts")
 @RestController
 public class ContractController {
     private final ContractRepository contractRepository;
     private final ContractAssembler contractAssembler;
     private final ContractService contractService;
 
-//    @GetMapping
-//    public List<ContractOutput> findAll() {
-//        return contractAssembler.toCollectionRepresentationModel(contractRepository.findAll());
-//    }
-
-    @GetMapping("/{contractId}")
-    public ResponseEntity<ContractOutput> findById(@PathVariable Long contractId) {
-        return contractRepository.findById(contractId)
+    @GetMapping
+    public ResponseEntity<ContractOutput> findById(@PathVariable Long studentId) {
+        return contractRepository.findByStudentId(studentId)
                 .map(contractAssembler::toRepresentationModel)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -42,19 +40,18 @@ public class ContractController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public ContractOutput create(@RequestBody ContractInput contractInput) {
-        Contract contract = contractAssembler.toEntity(contractInput);
+    public ContractOutput create(@PathVariable Long studentId, @Valid @RequestBody ContractInput contractInput) {
+        Contract contractDto = contractAssembler.toEntity(contractInput);
 
-        return contractAssembler.toRepresentationModel(contractService.createContract(contract));
+        return contractAssembler.toRepresentationModel(contractService.createContract(studentId, contractDto));
     }
 
-    @PutMapping("/{contractId}")
-    public ResponseEntity<ContractOutput> update(@PathVariable Long contractId, @RequestBody ContractInput contractInput) {
-        Contract contract = contractAssembler.toEntity(contractInput);
+    @PatchMapping("/{contractId}")
+    public ResponseEntity<ContractOutput> update(@PathVariable Long studentId, @PathVariable Long contractId, @Validated(ValidationGroups.UpdateValidation.class) @RequestBody ContractInput contractInput) {
+        Contract contractDto = contractAssembler.toEntity(contractInput);
+        contractDto.setId(contractId);
 
-        contract.setId(contractId);
-
-        return ResponseEntity.ok(contractAssembler.toRepresentationModel(contractService.updateContract(contract)));
+        return ResponseEntity.ok(contractAssembler.toRepresentationModel(contractService.updatePartialContract(studentId, contractDto)));
 
     }
 }

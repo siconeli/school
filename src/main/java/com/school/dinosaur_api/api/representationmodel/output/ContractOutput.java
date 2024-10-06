@@ -17,7 +17,7 @@ public class ContractOutput {
 
     private LocalDate registerDate;
 
-    private StudentSummary student;
+//    private StudentSummary student;
 
     private BigDecimal value;
 

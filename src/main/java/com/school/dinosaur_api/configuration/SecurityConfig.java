@@ -2,6 +2,7 @@ package com.school.dinosaur_api.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -17,6 +18,10 @@ public class SecurityConfig {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(authorize ->
+                        authorize.requestMatchers(HttpMethod.PUT, "/responsibles/{responsibleId}/authorize").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/responsibles/{responsibleId}/disauthorize").hasRole("ADMIN")
+                                .anyRequest().authenticated())
                 .build();
     }
 }

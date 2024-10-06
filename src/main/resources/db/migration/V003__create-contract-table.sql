@@ -4,7 +4,6 @@ create table contract (
     register_date date not null,
     student_id bigint not null,
     contracted_period varchar(20) not null,
-    value decimal(10,2) not null,
     date_input date not null,
     date_output date not null
 );

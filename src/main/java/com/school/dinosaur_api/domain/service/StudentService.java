@@ -50,8 +50,7 @@ public class StudentService {
 
     @Transactional
     public Student updatePartialStudent(Student studentDto) {
-        Student student = studentRepository.findById(studentDto.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Student not found with id " + studentDto.getId()));
+        Student student = this.findStudent(studentDto.getId());
 
         boolean cpfUsed = studentRepository.findByCpf(studentDto.getCpf())
                 .filter(s -> !s.equals(studentDto))
@@ -70,9 +69,7 @@ public class StudentService {
 
     @Transactional
     public void deleteStudent(Long studentId) {
-        if (!studentRepository.existsById(studentId)) {
-            throw new ResourceNotFoundException("Student not found with id " + studentId);
-        }
+        this.findStudent(studentId);
 
         studentRepository.deleteById(studentId);
     }

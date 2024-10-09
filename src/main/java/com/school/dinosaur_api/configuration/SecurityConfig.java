@@ -17,10 +17,10 @@ public class SecurityConfig {
     return httpSecurity
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(authorize ->
-                    authorize.requestMatchers(HttpMethod.PUT, "/responsibles/{responsibleId}/authorize").hasRole("ADMIN")
-                            .requestMatchers(HttpMethod.DELETE, "/responsibles/{responsibleId}/disauthorize").hasRole("ADMIN")
-                            .anyRequest().authenticated())
-            .build();
-}
+            .authorizeHttpRequests(authorize -> authorize
+                    .requestMatchers(HttpMethod.PUT, "/responsibles/{responsibleId}/authorize").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/responsibles/{responsibleId}/disauthorize").hasRole("ADMIN")
+                    .anyRequest().authenticated())
+                    .build();
+    }
 }

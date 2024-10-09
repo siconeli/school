@@ -16,10 +16,6 @@ import java.sql.Date;
 @Getter
 @Setter
 public class ContractInput {
-//    @Valid
-//    @NotNull
-//    private StudentIdInput student;
-
     @Positive(groups = {Default.class, ValidationGroups.UpdateValidation.class})
     @NotNull
     private BigDecimal value;

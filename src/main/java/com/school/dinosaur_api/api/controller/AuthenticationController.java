@@ -4,6 +4,7 @@ import com.school.dinosaur_api.api.representationmodel.input.AuthenticationInput
 import com.school.dinosaur_api.api.representationmodel.input.RegisterInput;
 import com.school.dinosaur_api.domain.model.User;
 import com.school.dinosaur_api.domain.repository.UserRepository;
+import com.school.dinosaur_api.domain.service.AuthorizationSecurityService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final AuthorizationSecurityService authorizationSecurityService;
+
 
     @PostMapping("/login")
     public ResponseEntity<Void> login(@Valid @RequestBody AuthenticationInput authenticationInput) {
@@ -35,15 +36,7 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<Void> register(@Valid @RequestBody RegisterInput registerInput) {
-        if(userRepository.findByLogin(registerInput.getLogin()) != null) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        String encryptedPassword = passwordEncoder.encode(registerInput.getPassword());
-
-        User newUser = new User(registerInput.getLogin(), encryptedPassword, registerInput.getRole());
-
-        userRepository.save(newUser);
+        authorizationSecurityService.registerUser(registerInput);
 
         return ResponseEntity.ok().build();
     }

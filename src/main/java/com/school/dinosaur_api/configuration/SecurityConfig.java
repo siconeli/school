@@ -23,6 +23,8 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authorize -> authorize
+                    .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/auth/register" ).permitAll()
                     .requestMatchers(HttpMethod.PUT, "/responsibles/{responsibleId}/authorize").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.DELETE, "/responsibles/{responsibleId}/disauthorize").hasRole("ADMIN")
                     .anyRequest().authenticated())

@@ -17,12 +17,14 @@ import java.util.List;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "users")
 @Entity(name = "users")
-public class User implements UserDetails {
+public class User {
 
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
+
+    private String name;
 
     private String login;
 
@@ -30,45 +32,4 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
-
-    public User(String login, String password, UserRole role) {
-        this.login = login;
-        this.password = password;
-        this.role = role;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.role == UserRole.ADMIN) {
-            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
-        }
-        else {
-            return List.of(new SimpleGrantedAuthority("ROLE_USER"));
-        }
-    }
-
-    @Override
-    public String getUsername() {
-        return login;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
-    }
 }

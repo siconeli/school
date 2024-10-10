@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @AllArgsConstructor
 @Service
-public class AuthorizationSecurityService implements UserDetailsService {
+public class AuthenticationSecurityService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;

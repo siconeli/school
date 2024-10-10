@@ -2,16 +2,12 @@ package com.school.dinosaur_api.api.controller;
 
 import com.school.dinosaur_api.api.representationmodel.input.AuthenticationInput;
 import com.school.dinosaur_api.api.representationmodel.input.RegisterInput;
-import com.school.dinosaur_api.domain.model.User;
-import com.school.dinosaur_api.domain.repository.UserRepository;
-import com.school.dinosaur_api.domain.service.AuthorizationSecurityService;
+import com.school.dinosaur_api.domain.service.AuthenticationSecurityService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
-    private final AuthorizationSecurityService authorizationSecurityService;
+    private final AuthenticationSecurityService authenticationSecurityService;
 
 
     @PostMapping("/login")
@@ -36,7 +32,7 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<Void> register(@Valid @RequestBody RegisterInput registerInput) {
-        authorizationSecurityService.registerUser(registerInput);
+        authenticationSecurityService.registerUser(registerInput);
 
         return ResponseEntity.ok().build();
     }

@@ -1,9 +1,7 @@
 package com.school.dinosaur_api.api.representationmodel.input;
 
-import com.school.dinosaur_api.domain.model.Period;
+import com.school.dinosaur_api.domain.enums.Period;
 import com.school.dinosaur_api.domain.validation.ValidationGroups;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.groups.Default;

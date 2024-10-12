@@ -1,6 +1,6 @@
 package com.school.dinosaur_api.api.representationmodel.input;
 
-import com.school.dinosaur_api.domain.model.Kinship;
+import com.school.dinosaur_api.domain.enums.Kinship;
 import com.school.dinosaur_api.domain.validation.ValidationGroups;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

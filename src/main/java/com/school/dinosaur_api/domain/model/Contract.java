@@ -1,7 +1,7 @@
 package com.school.dinosaur_api.domain.model;
 
+import com.school.dinosaur_api.domain.enums.Period;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

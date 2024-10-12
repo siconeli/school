@@ -1,5 +1,6 @@
 package com.school.dinosaur_api.domain.model;
 
+import com.school.dinosaur_api.domain.enums.Kinship;
 import com.school.dinosaur_api.domain.exception.BusinessException;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;

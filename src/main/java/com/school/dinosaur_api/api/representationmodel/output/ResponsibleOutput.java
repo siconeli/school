@@ -1,6 +1,6 @@
 package com.school.dinosaur_api.api.representationmodel.output;
 
-import com.school.dinosaur_api.domain.model.Kinship;
+import com.school.dinosaur_api.domain.enums.Kinship;
 import lombok.Getter;
 import lombok.Setter;
 

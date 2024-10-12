@@ -2,12 +2,7 @@ package com.school.dinosaur_api.domain.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.w3c.dom.Text;
 
-import java.util.Collection;
 import java.util.List;
 
 @Getter
@@ -30,6 +25,7 @@ public class User {
 
     private String password;
 
-    @Enumerated(EnumType.STRING)
-    private UserRole role;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<ModelRole> roles;
 }

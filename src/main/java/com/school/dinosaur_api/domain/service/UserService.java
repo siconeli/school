@@ -13,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -27,9 +28,11 @@ public class UserService {
 
     private JwtTokenService jwtTokenService;
 
+    @Transactional
     public void saveUser(CreateUserDTO createUserDTO) {
         User newUser = User.builder()
                 .name(createUserDTO.name())
+                .login(createUserDTO.login())
                 .password(securityConfig.passwordEncoder().encode(createUserDTO.password()))
                 .roles(List.of(ModelRole.builder().name(createUserDTO.role()).build()))
                 .build();
@@ -37,6 +40,7 @@ public class UserService {
         userRepository.save(newUser);
     }
 
+    @Transactional
     public JwtTokenDTO authenticateUser(LoginUserDTO loginUserDTO) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(loginUserDTO.login(), loginUserDTO.password());
 

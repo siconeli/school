@@ -1,5 +1,6 @@
 package com.school.dinosaur_api.domain.security;
 
+import com.school.dinosaur_api.domain.exception.BusinessException;
 import com.school.dinosaur_api.domain.model.ModelUserDetails;
 import com.school.dinosaur_api.domain.model.User;
 import com.school.dinosaur_api.domain.repository.UserRepository;
@@ -31,7 +32,7 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
             String token = recuperaToken(request);
             if (token != null) {
                 String subject = jwtTokenService.pegarToken(token);
-                User user = userRepository.findByLogin(subject).get();
+                User user = userRepository.findByLogin(subject).orElseThrow(() -> new BusinessException("User not found"));
                 ModelUserDetails modelUserDetails = new ModelUserDetails(user);
                 Authentication authentication =
                         new UsernamePasswordAuthenticationToken(
@@ -49,7 +50,7 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
 
     private boolean verificaEndpointsPublicos(HttpServletRequest request) {
         String requestURI = request.getRequestURI();
-        return !Arrays.asList("/users/login", "/users").contains(requestURI);
+        return !Arrays.asList("/auth/users/login", "/auth/users").contains(requestURI);
     }
 
     private String recuperaToken(HttpServletRequest request) {

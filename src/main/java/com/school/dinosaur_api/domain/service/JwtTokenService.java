@@ -7,6 +7,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.school.dinosaur_api.domain.model.ModelUserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.time.ZoneId;
@@ -20,6 +21,7 @@ public class JwtTokenService {
     @Value("${token.jwt.issuer}")
     private String issuer;
 
+    @Transactional
     public String generateToken(ModelUserDetails userDetails) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret_key);
@@ -34,6 +36,7 @@ public class JwtTokenService {
         }
     }
 
+    @Transactional
     public String pegarToken(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret_key);

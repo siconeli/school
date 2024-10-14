@@ -3,6 +3,7 @@ package com.school.dinosaur_api.domain.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Builder
@@ -10,12 +11,9 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "users")
 @Entity(name = "users")
-public class User {
-
-    @EqualsAndHashCode.Include
+public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;

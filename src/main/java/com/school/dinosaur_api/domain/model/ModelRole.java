@@ -4,9 +4,8 @@ import com.school.dinosaur_api.domain.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Builder
 @Getter
-@Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

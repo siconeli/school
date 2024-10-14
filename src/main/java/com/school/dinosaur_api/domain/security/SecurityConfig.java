@@ -28,8 +28,9 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/auth/users").permitAll()
-                    .requestMatchers(HttpMethod.PUT, "responsibles/{responsibleId}/authorize").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.DELETE, "responsibles/{responsibleId}/disauthorize").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/auth/users/login").permitAll()
+//                    .requestMatchers(HttpMethod.PUT, "responsibles/{responsibleId}/authorize").hasRole("ADMIN")
+//                    .requestMatchers(HttpMethod.DELETE, "responsibles/{responsibleId}/disauthorize").hasRole("ADMIN")
                     .anyRequest().permitAll()
                 )
                 .addFilterBefore(userAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
@@ -45,7 +46,4 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-
-
 }

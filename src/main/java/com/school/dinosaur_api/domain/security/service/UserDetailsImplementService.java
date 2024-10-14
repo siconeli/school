@@ -1,9 +1,9 @@
-package com.school.dinosaur_api.domain.service;
+package com.school.dinosaur_api.domain.security.service;
 
 import com.school.dinosaur_api.domain.exception.BusinessException;
-import com.school.dinosaur_api.domain.model.ModelUserDetails;
-import com.school.dinosaur_api.domain.model.User;
 import com.school.dinosaur_api.domain.repository.UserRepository;
+import com.school.dinosaur_api.domain.security.model.ModelUserDetails;
+import com.school.dinosaur_api.domain.security.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

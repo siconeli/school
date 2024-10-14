@@ -1,9 +1,9 @@
-package com.school.dinosaur_api.api.controller;
+package com.school.dinosaur_api.domain.security.controller;
 
-import com.school.dinosaur_api.api.representationmodel.input.CreateUserDTO;
-import com.school.dinosaur_api.api.representationmodel.input.JwtTokenDTO;
-import com.school.dinosaur_api.api.representationmodel.input.LoginUserDTO;
-import com.school.dinosaur_api.domain.service.UserService;
+import com.school.dinosaur_api.domain.security.dto.CreateUserDTO;
+import com.school.dinosaur_api.domain.security.dto.JwtTokenDTO;
+import com.school.dinosaur_api.domain.security.dto.LoginUserDTO;
+import com.school.dinosaur_api.domain.security.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

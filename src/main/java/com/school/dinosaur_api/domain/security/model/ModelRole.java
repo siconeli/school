@@ -1,6 +1,6 @@
-package com.school.dinosaur_api.domain.model;
+package com.school.dinosaur_api.domain.security.model;
 
-import com.school.dinosaur_api.domain.enums.Role;
+import com.school.dinosaur_api.domain.security.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 

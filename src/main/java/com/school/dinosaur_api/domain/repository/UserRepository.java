@@ -1,6 +1,6 @@
 package com.school.dinosaur_api.domain.repository;
 
-import com.school.dinosaur_api.domain.model.User;
+import com.school.dinosaur_api.domain.security.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

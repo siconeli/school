@@ -1,10 +1,10 @@
-package com.school.dinosaur_api.domain.security;
+package com.school.dinosaur_api.domain.security.config;
 
 import com.school.dinosaur_api.domain.exception.BusinessException;
-import com.school.dinosaur_api.domain.model.ModelUserDetails;
-import com.school.dinosaur_api.domain.model.User;
 import com.school.dinosaur_api.domain.repository.UserRepository;
-import com.school.dinosaur_api.domain.service.JwtTokenService;
+import com.school.dinosaur_api.domain.security.model.ModelUserDetails;
+import com.school.dinosaur_api.domain.security.model.User;
+import com.school.dinosaur_api.domain.security.service.JwtTokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 @AllArgsConstructor
 @Component
@@ -50,7 +49,9 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
 
     private boolean verificaEndpointsPublicos(HttpServletRequest request) {
         String requestURI = request.getRequestURI();
-        return !Arrays.asList("/auth/users/login", "/auth/users").contains(requestURI);
+//        return !Arrays.asList("/auth/users/login", "/auth/users").contains(requestURI);
+        String uriPublic = ("/auth/users/login");
+        return !uriPublic.contains(requestURI); // Se a URI da requisição não contem na uriPublic, retorna True
     }
 
     private String recuperaToken(HttpServletRequest request) {

@@ -1,4 +1,4 @@
-package com.school.dinosaur_api.domain.security;
+package com.school.dinosaur_api.domain.security.config;
 
 import lombok.AllArgsConstructor;
 
@@ -27,11 +27,10 @@ public class SecurityConfig {
         return httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/auth/users").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/users/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/users/**").permitAll()
 //                    .requestMatchers(HttpMethod.PUT, "responsibles/{responsibleId}/authorize").hasRole("ADMIN")
 //                    .requestMatchers(HttpMethod.DELETE, "responsibles/{responsibleId}/disauthorize").hasRole("ADMIN")
-                    .anyRequest().permitAll()
+                    .anyRequest().authenticated()
                 )
                 .addFilterBefore(userAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

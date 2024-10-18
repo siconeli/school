@@ -1,16 +1,16 @@
 package com.school.dinosaur_api.domain.model;
 
 import com.school.dinosaur_api.api.assembler.ResponsibleAssembler;
+import com.school.dinosaur_api.api.representationmodel.input.StudentInput;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
 @Setter
@@ -36,6 +36,14 @@ public class Student {
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Responsible> responsibles = new ArrayList<>();
+
+    public Student(StudentInput studentInput) {
+        this.active = true;
+        this.registerDate = LocalDate.now();
+        this.cpf = studentInput.getCpf();
+        this.name = studentInput.getName();
+        this.age = studentInput.getAge();
+    }
 
     public Responsible addResponsible(Responsible responsible) {
         responsible.setActive(true);

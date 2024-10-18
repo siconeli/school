@@ -21,7 +21,6 @@ import java.util.List;
 @Service
 public class StudentService {
     private final StudentRepository studentRepository;
-    private final IgnoreNullBeanUtilsBean ignoreNullBeanUtilsBean;
 
     public Student findStudent(Long studentId) {
         return studentRepository.findById(studentId)
@@ -29,42 +28,42 @@ public class StudentService {
     }
 
     @Transactional
-    public Student createStudent(Student studentDto) {
-        if (studentDto.getId() != null) {
+    public Student createStudent(Student student) {
+        if (student.getId() != null) {
             throw new BusinessException("Must not contain the ID in the request body");
         }
 
-        boolean cpfUsed = studentRepository.findByCpf(studentDto.getCpf())
-                .filter(s -> !s.equals(studentDto))
+        boolean cpfUsed = studentRepository.findByCpf(student.getCpf())
+                .filter(s -> !s.equals(student))
                 .isPresent();
 
         if (cpfUsed) {
-            throw new BusinessException("CPF " + studentDto.getCpf() + " already in use");
+            throw new BusinessException("CPF " + student.getCpf() + " already in use");
         }
 
-        studentDto.setActive(true);
-        studentDto.setRegisterDate(LocalDate.now());
+        student.setActive(true);
+        student.setRegisterDate(LocalDate.now());
 
-        return studentRepository.save(studentDto);
+        return studentRepository.save(student);
     }
 
     @Transactional
-    public Student updatePartialStudent(Student studentDto) {
-        Student student = this.findStudent(studentDto.getId());
+    public Student updatePartialStudent(Student student) {
+        Student studentDb = this.findStudent(student.getId());
 
-        boolean cpfUsed = studentRepository.findByCpf(studentDto.getCpf())
-                .filter(s -> !s.equals(studentDto))
+        boolean cpfUsed = studentRepository.findByCpf(student.getCpf())
+                .filter(s -> !s.equals(student))
                 .isPresent();
 
         if (cpfUsed) {
-            throw new BusinessException("CPF " + studentDto.getCpf() + " already in use");
+            throw new BusinessException("CPF " + student.getCpf() + " already in use");
         }
 
-        if(studentDto.getCpf() != null) {student.setCpf(studentDto.getCpf());}
-        if(studentDto.getName() != null) {student.setName(studentDto.getName());}
-        if(studentDto.getAge() != null) {student.setAge(studentDto.getAge());}
+        if(student.getCpf() != null) {studentDb.setCpf(student.getCpf());}
+        if(student.getName() != null) {studentDb.setName(student.getName());}
+        if(student.getAge() != null) {studentDb.setAge(student.getAge());}
 
-        return studentRepository.save(student);
+        return studentRepository.save(studentDb);
     }
 
     @Transactional

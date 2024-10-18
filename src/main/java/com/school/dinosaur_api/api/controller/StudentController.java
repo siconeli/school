@@ -40,16 +40,16 @@ public class StudentController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public StudentOutput create(@Valid @RequestBody StudentInput studentInput) {
-        Student studentDto = studentAssembler.toEntity(studentInput);
-        return studentAssembler.toRepresentationModel(studentService.createStudent(studentDto));
+        Student student = studentAssembler.toEntity(studentInput);
+        return studentAssembler.toRepresentationModel(studentService.createStudent(student));
     }
 
     @PatchMapping("/{studentId}")
     public ResponseEntity<StudentOutput> update(@PathVariable Long studentId, @Validated(ValidationGroups.UpdateValidation.class) @RequestBody StudentInput studentInput) {
-        Student studentDto = studentAssembler.toEntity(studentInput);
-        studentDto.setId(studentId);
+        Student student = studentAssembler.toEntity(studentInput);
+        student.setId(studentId);
 
-        return ResponseEntity.ok(studentAssembler.toRepresentationModel(studentService.updatePartialStudent(studentDto)));
+        return ResponseEntity.ok(studentAssembler.toRepresentationModel(studentService.updatePartialStudent(student)));
     }
 
     @DeleteMapping("/{studentId}")
